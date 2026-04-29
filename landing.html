@@ -1747,10 +1747,32 @@ function toast(msg){
 }
 
 /* ===== FORM ===== */
-document.getElementById('contactForm').addEventListener('submit', e => {
+const LEADS_ENDPOINT = 'https://profit-code-management.vercel.app/api/leads';
+document.getElementById('contactForm').addEventListener('submit', async e => {
   e.preventDefault();
-  toast('Mensaje enviado · te respondemos pronto');
-  e.target.reset();
+  const form = e.target;
+  const submitBtn = form.querySelector('.form-submit');
+  const data = Object.fromEntries(new FormData(form).entries());
+
+  const originalLabel = submitBtn.innerHTML;
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = 'Enviando...';
+
+  try {
+    const res = await fetch(LEADS_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    if (!res.ok) throw new Error('Error');
+    toast('Mensaje enviado · te respondemos pronto');
+    form.reset();
+  } catch (err) {
+    toast('No se pudo enviar. Probá de nuevo o escribinos directo.');
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = originalLabel;
+  }
 });
 
 /* ===== KONAMI easter egg ===== */
