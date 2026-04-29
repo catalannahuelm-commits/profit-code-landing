@@ -1,0 +1,21 @@
+{
+  "headers": [
+    {
+      "source": "/(.*).mp4",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/(.*).webp",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    }
+  ],
+  "redirects": [
+    { "source": "/m", "destination": "/landing", "permanent": false },
+    { "source": "/mobile", "destination": "/landing", "permanent": false }
+  ],
+  "cleanUrls": true
+}

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Profit Code — Agencia de desarrollo web y agentes IA. Diseño premium, código limpio, resultados reales.">
+<meta name="theme-color" content="#050507">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="favicon-64.png">
+<link rel="icon" type="image/png" sizes="128x128" href="favicon-128.png">
+<link rel="icon" type="image/png" sizes="256x256" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+<title>Profit Code — Desarrollo Web & Agentes IA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --accent:#6C5CE7; --accent-light:#A29BFE; --cyan:#00CEC9;
+  --accent-glow:rgba(108,92,231,0.4); --cyan-glow:rgba(0,206,201,0.35);
+  --black:#050507; --white:#F0F0F5;
+  --font-display:'Syne',sans-serif; --font-body:'Space Grotesk',sans-serif;
+  --ease:cubic-bezier(0.25,0.46,0.45,0.94);
+  --ease-out:cubic-bezier(0.16,1,0.3,1);
+}
+html,body{height:100%;background:#000;color:var(--white);font-family:var(--font-body);overflow:hidden;-webkit-font-smoothing:antialiased}
+body.released{overflow:auto}
+body.released .intro{display:none}
+
+/* =========== INTRO STAGE =========== */
+.intro{position:fixed;inset:0;z-index:100;background:#000;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.intro-stage{position:absolute;inset:0;transform-origin:center center}
+
+/* VIDEO */
+.intro-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 0.8s var(--ease);transform-origin:50% 42%;will-change:transform,filter,opacity}
+.intro-video.ready{opacity:1}
+
+/* Versión borrosa de fondo (solo mobile) — rellena los bordes con el mismo video difuminado */
+.intro-video-bg{display:none}
+
+/* WARP — cámara entra a la nebulosa */
+.intro.warping .intro-video,
+.intro.warping .intro-video-bg{
+  animation:warpIntoNebula 2.2s cubic-bezier(0.6,0,0.4,1) forwards;
+}
+@keyframes warpIntoNebula{
+  0%{transform:scale(1);filter:blur(0) brightness(1) saturate(1)}
+  40%{transform:scale(2.4);filter:blur(2px) brightness(1.15) saturate(1.3)}
+  70%{transform:scale(5);filter:blur(8px) brightness(1.5) saturate(1.5)}
+  100%{transform:scale(10);filter:blur(20px) brightness(2) saturate(1.8);opacity:0}
+}
+
+/* FLASH (white-violet) en el centro durante el warp */
+.warp-flash{position:absolute;inset:0;background:radial-gradient(circle at 50% 42%,rgba(255,255,255,0.9) 0%,rgba(162,155,254,0.7) 15%,rgba(108,92,231,0.5) 30%,rgba(0,206,201,0.3) 50%,transparent 70%);opacity:0;pointer-events:none;mix-blend-mode:screen;z-index:6}
+.intro.warping .warp-flash{animation:flashIn 2.2s cubic-bezier(0.6,0,0.4,1) forwards}
+@keyframes flashIn{
+  0%{opacity:0;transform:scale(0.4)}
+  60%{opacity:1;transform:scale(1.4)}
+  85%{opacity:0.9;transform:scale(2)}
+  100%{opacity:0;transform:scale(3)}
+}
+
+/* Particles streaks (líneas de velocidad) */
+.warp-streaks{position:absolute;inset:0;opacity:0;pointer-events:none;z-index:7;background:
+  radial-gradient(2px 60px at 20% 50%,rgba(162,155,254,0.6),transparent),
+  radial-gradient(2px 80px at 80% 50%,rgba(0,206,201,0.5),transparent),
+  radial-gradient(2px 100px at 30% 30%,rgba(255,255,255,0.4),transparent),
+  radial-gradient(2px 70px at 70% 70%,rgba(108,92,231,0.5),transparent),
+  radial-gradient(2px 90px at 15% 70%,rgba(0,206,201,0.4),transparent),
+  radial-gradient(2px 60px at 85% 30%,rgba(255,255,255,0.3),transparent)
+}
+.intro.warping .warp-streaks{animation:streaksIn 1.6s 0.2s ease-out forwards}
+@keyframes streaksIn{
+  0%{opacity:0;transform:scale(0.5)}
+  50%{opacity:1;transform:scale(2.5)}
+  100%{opacity:0;transform:scale(8)}
+}
+
+/* OVERLAY MIENTRAS ESTÁ CERRADA (clickable) */
+.intro-cta{position:absolute;left:50%;bottom:14%;transform:translateX(-50%);z-index:10;opacity:0;animation:ctaIn 0.9s 1.2s var(--ease-out) forwards;pointer-events:none}
+.intro-cta.ready{pointer-events:auto}
+@keyframes ctaIn{from{opacity:0;transform:translateX(-50%) translateY(20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+
+.click-pulse{position:relative;display:flex;flex-direction:column;align-items:center;gap:14px;cursor:pointer;padding:14px 26px;background:rgba(15,15,24,0.4);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(108,92,231,0.3);border-radius:14px;transition:all 0.4s var(--ease)}
+.click-pulse:hover{border-color:var(--accent);box-shadow:0 0 40px var(--accent-glow);transform:translateY(-2px)}
+.click-pulse::before{content:'';position:absolute;inset:-2px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--cyan));opacity:0;transition:opacity 0.4s var(--ease);z-index:-1;filter:blur(10px)}
+.click-pulse:hover::before{opacity:0.6}
+.click-pulse-text{font-family:var(--font-display);font-weight:700;font-size:0.95rem;letter-spacing:-0.01em;background:linear-gradient(135deg,var(--accent-light),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.click-pulse-sub{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.5);font-weight:600;display:flex;align-items:center;gap:8px}
+.click-pulse-sub::before,.click-pulse-sub::after{content:'';width:18px;height:1px;background:linear-gradient(to right,transparent,rgba(255,255,255,0.3),transparent)}
+.click-pulse-icon{position:absolute;top:-44px;left:50%;transform:translateX(-50%);width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--cyan));display:flex;align-items:center;justify-content:center;animation:bounce 1.6s infinite ease-in-out;box-shadow:0 0 20px var(--accent-glow)}
+.click-pulse-icon svg{width:16px;height:16px;stroke:#fff;stroke-width:2.5;fill:none}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-8px)}}
+
+/* RIPPLE animado debajo del CTA */
+.click-pulse::after{content:'';position:absolute;left:50%;bottom:-20px;transform:translateX(-50%);width:90%;height:6px;border-radius:50%;background:radial-gradient(ellipse,var(--accent-glow),transparent 70%);filter:blur(6px);animation:ripple 2.4s ease-in-out infinite}
+@keyframes ripple{0%,100%{opacity:0.4;transform:translateX(-50%) scale(0.8)}50%{opacity:0.9;transform:translateX(-50%) scale(1.15)}}
+
+
+/* SKIP BUTTON */
+.skip-btn{position:fixed;top:20px;right:20px;z-index:200;padding:8px 14px;background:rgba(15,15,24,0.5);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(108,92,231,0.2);border-radius:8px;color:rgba(255,255,255,0.7);font-size:12px;font-weight:500;cursor:pointer;transition:all 0.4s var(--ease);display:flex;align-items:center;gap:6px;font-family:var(--font-body);opacity:0;animation:ctaIn 0.6s 1.6s var(--ease-out) forwards}
+.skip-btn:hover{color:#fff;border-color:rgba(108,92,231,0.5);background:rgba(20,20,30,0.7)}
+.skip-btn svg{width:14px;height:14px;stroke-width:2;stroke:currentColor;fill:none}
+.intro.playing .skip-btn{opacity:0.45}
+.intro.warping .skip-btn{opacity:0 !important;pointer-events:none;transform:translateY(-8px);transition:opacity 0.4s var(--ease),transform 0.4s var(--ease)}
+
+.intro.playing .intro-cta,
+.intro.warping .intro-cta{opacity:0 !important;pointer-events:none;transition:opacity 0.5s var(--ease)}
+
+/* AUDIO BTN */
+.audio-btn{position:fixed;bottom:20px;left:20px;z-index:200;width:42px;height:42px;border-radius:50%;background:rgba(15,15,24,0.6);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(108,92,231,0.25);color:#fff;cursor:pointer;display:none;align-items:center;justify-content:center;transition:all 0.4s var(--ease);opacity:0}
+.audio-btn.visible{display:flex;opacity:1}
+.audio-btn:hover{border-color:var(--accent);box-shadow:0 0 20px var(--accent-glow)}
+.audio-btn svg{width:18px;height:18px;stroke-width:2;stroke:currentColor;fill:none}
+.intro.warping .audio-btn{opacity:0;pointer-events:none;transform:translateY(8px)}
+
+/* =========== LANDING WRAPPER =========== */
+.landing-wrap{position:fixed;inset:0;z-index:50;opacity:0;visibility:hidden;transition:opacity 1s var(--ease),visibility 1s var(--ease);transform:scale(1.1);will-change:transform,opacity,filter}
+.landing-wrap.visible{opacity:1;visibility:visible;transform:scale(1);transition:opacity 1.4s cubic-bezier(0.2,0,0.2,1),visibility 1.4s cubic-bezier(0.2,0,0.2,1),transform 1.6s cubic-bezier(0.2,0,0.2,1),filter 1.4s ease-out}
+.landing-wrap.emerging{filter:blur(20px) brightness(1.5)}
+.landing-wrap.emerging.visible{filter:blur(0) brightness(1)}
+.landing-frame{width:100%;height:100%;border:none;display:block}
+
+/* =========== RESPONSIVE =========== */
+@media (max-width:768px){
+  /* La PC entera, escalada para que llene mejor la pantalla */
+  .intro-stage{transform:scale(2.1)}
+  .intro-video{object-fit:contain;background:transparent}
+  /* Fondo borroso: el mismo video escalado, llena los bordes */
+  .intro-video-bg{
+    display:block;position:absolute;inset:0;width:100%;height:100%;
+    object-fit:cover;
+    filter:blur(40px) brightness(0.5) saturate(1.4);
+    transform:scale(1.3);
+    z-index:0;pointer-events:none;
+    opacity:0;transition:opacity 0.8s var(--ease);
+  }
+  .intro-video-bg.ready{opacity:1}
+  .intro-video{z-index:1}
+
+  /* CTA más arriba (cerca del centro), más grande */
+  .intro-cta{bottom:22%;width:88%;max-width:380px}
+  .click-pulse{padding:24px 28px;border-radius:18px;gap:16px;width:100%}
+  .click-pulse-text{font-size:1.45rem;letter-spacing:-.02em;text-align:center}
+  .click-pulse-sub{font-size:10px;letter-spacing:3px}
+  .click-pulse-icon{width:46px;height:46px;top:-58px}
+  .click-pulse-icon svg{width:22px;height:22px}
+  .skip-btn{top:14px;right:14px;padding:7px 12px;font-size:11px}
+  .audio-btn{bottom:16px;left:16px;width:38px;height:38px}
+}
+@media (max-width:480px){
+  .intro-cta{bottom:18%}
+  .click-pulse-text{font-size:1.55rem}
+  .click-pulse{padding:26px 24px}
+}
+</style>
+</head>
+<body>
+
+<!-- INTRO -->
+<div class="intro" id="intro">
+
+  <div class="intro-stage">
+    <video class="intro-video-bg" id="introVideoBg"
+      src="intro-desktop.mp4"
+      preload="auto"
+      playsinline
+      webkit-playsinline
+      muted
+      autoplay
+      loop
+      aria-hidden="true"></video>
+
+    <video class="intro-video" id="introVideo"
+      src="intro-desktop.mp4"
+      preload="auto"
+      playsinline
+      webkit-playsinline
+      muted></video>
+  </div>
+
+  <div class="warp-flash"></div>
+  <div class="warp-streaks"></div>
+
+  <button class="skip-btn" id="skipBtn" type="button" aria-label="Saltar intro">
+    Saltar intro
+    <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
+
+  <div class="intro-cta" id="introCta">
+    <div class="click-pulse">
+      <div class="click-pulse-icon"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="6 4 20 12 6 20 6 4"/></svg></div>
+      <div class="click-pulse-text">Entrá a Profit Code</div>
+      <div class="click-pulse-sub">Experiencia inmersiva</div>
+    </div>
+  </div>
+
+  <button class="audio-btn" id="audioBtn" type="button" aria-label="Activar sonido" title="Activar sonido">
+    <svg viewBox="0 0 24 24" id="audioIcon"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+  </button>
+
+</div>
+
+<!-- LANDING (iframe) — emerge desde la nebulosa -->
+<div class="landing-wrap emerging" id="landingWrap">
+  <iframe class="landing-frame" id="landingFrame" src="about:blank" title="Profit Code"></iframe>
+</div>
+
+<script>
+const intro = document.getElementById('intro');
+const video = document.getElementById('introVideo');
+const videoBg = document.getElementById('introVideoBg');
+const introCta = document.getElementById('introCta');
+const skipBtn = document.getElementById('skipBtn');
+const audioBtn = document.getElementById('audioBtn');
+const audioIcon = document.getElementById('audioIcon');
+const landingWrap = document.getElementById('landingWrap');
+const landingFrame = document.getElementById('landingFrame');
+
+let started = false;
+let landingPreloaded = false;
+let warped = false;
+
+// Mostrar el primer frame del video como "poster"
+function showPoster() {
+  if (video.currentTime < 0.05) {
+    try { video.currentTime = 0.05; } catch(e) {}
+  }
+  video.classList.add('ready');
+  videoBg && videoBg.classList.add('ready');
+  introCta.classList.add('ready');
+}
+
+if (video.readyState >= 2) {
+  // Ya está cargado
+  showPoster();
+} else {
+  video.addEventListener('loadeddata', showPoster, {once: true});
+  video.addEventListener('canplay', showPoster, {once: true});
+}
+
+// Pre-cargar la landing real en cuanto el video esté listo
+function preloadLanding() {
+  if (landingPreloaded) return;
+  landingPreloaded = true;
+  landingFrame.src = 'landing.html';
+}
+
+// CLICK → arranca el video con sonido
+function startIntro() {
+  if (started) return;
+  started = true;
+  intro.classList.add('playing');
+  video.muted = false;
+  video.currentTime = 0;
+  if (videoBg) { try { videoBg.currentTime = 0; videoBg.play(); } catch(e) {} }
+  const p = video.play();
+  if (p && p.catch) {
+    p.catch(() => {
+      // Si el browser bloquea audio, reproduce muted
+      video.muted = true;
+      audioBtn.classList.add('visible');
+      video.play().catch(()=>{});
+    });
+  }
+  preloadLanding();
+}
+
+// Click en intro: arranca el video con sonido (único click necesario)
+intro.addEventListener('click', e => {
+  if (e.target === skipBtn || skipBtn.contains(e.target)) return;
+  if (e.target === audioBtn || audioBtn.contains(e.target)) return;
+  startIntro();
+});
+
+// SKIP intro → salta el video y entra directo a la landing
+skipBtn.addEventListener('click', e => {
+  e.stopPropagation();
+  if (warped) return;
+  video.pause();
+  preloadLanding();
+  enterLanding();
+});
+
+// Toggle audio
+audioBtn.addEventListener('click', e => {
+  e.stopPropagation();
+  video.muted = !video.muted;
+  audioIcon.innerHTML = video.muted
+    ? '<path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>'
+    : '<path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"/>';
+});
+
+// Cuando termina el video → entra automáticamente a la nebulosa
+video.addEventListener('ended', () => {
+  enterLanding();
+});
+
+function enterLanding() {
+  if (warped) return;
+  warped = true;
+  preloadLanding();
+  intro.classList.remove('ended-state');
+  intro.classList.add('warping');
+  setTimeout(() => {
+    landingWrap.classList.add('visible');
+  }, 1400);
+  setTimeout(() => {
+    intro.style.opacity = '0';
+    intro.style.transition = 'opacity 0.4s ease-out';
+  }, 2000);
+  setTimeout(() => {
+    document.body.classList.add('released');
+  }, 2600);
+}
+
+// Si el video falla, mostrar landing directo
+video.addEventListener('error', () => {
+  console.warn('Video failed to load');
+  enterLanding();
+});
+</script>
+</body>
+</html>

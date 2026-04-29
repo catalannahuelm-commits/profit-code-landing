@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8">
+<title>Start frame</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;background:#050507;overflow:hidden}
+body{position:relative;font-family:'Syne',sans-serif}
+
+/* AMBIENT */
+.ambient{position:absolute;inset:0;overflow:hidden}
+.orb{position:absolute;border-radius:50%;filter:blur(180px)}
+.orb-1{width:1200px;height:1200px;background:radial-gradient(circle,rgba(108,92,231,0.32) 0%,transparent 70%);top:-300px;right:-300px}
+.orb-2{width:1000px;height:1000px;background:radial-gradient(circle,rgba(0,206,201,0.22) 0%,transparent 70%);bottom:-300px;left:-300px}
+.orb-3{width:900px;height:900px;background:radial-gradient(circle,rgba(108,92,231,0.14) 0%,transparent 70%);top:50%;left:30%;transform:translate(-50%,-50%)}
+
+.grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(108,92,231,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(108,92,231,0.05) 1px,transparent 1px);background-size:120px 120px;mask:radial-gradient(ellipse 70% 70% at 50% 50%,#000 30%,transparent 80%);-webkit-mask:radial-gradient(ellipse 70% 70% at 50% 50%,#000 30%,transparent 80%)}
+
+.particles{position:absolute;inset:0}
+.particle{position:absolute;width:3px;height:3px;background:#A29BFE;border-radius:50%;opacity:0.5;box-shadow:0 0 6px currentColor}
+
+/* SCENE */
+.scene{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);perspective:3500px;perspective-origin:50% 55%}
+.macbook{position:relative;transform-style:preserve-3d;transform:rotateX(-32deg) rotateY(0deg)}
+
+/* BASE */
+.base{position:relative;width:1400px;height:920px;border-radius:36px;background:linear-gradient(180deg,#2c2c33 0%,#1a1a1f 50%,#252529 100%);box-shadow:inset 0 2px 0 rgba(255,255,255,0.1),inset 0 -2px 0 rgba(0,0,0,0.5),0 60px 100px rgba(0,0,0,0.7)}
+.base::before{content:'';position:absolute;left:50%;bottom:18px;transform:translateX(-50%);width:200px;height:6px;background:rgba(255,255,255,0.04);border-radius:4px}
+
+/* BASE side hints (volumen lateral) */
+.base::after{content:'';position:absolute;inset:0;border-radius:36px;background:linear-gradient(180deg,transparent 60%,rgba(0,0,0,0.4));pointer-events:none}
+
+/* KEYBOARD */
+.keyboard{position:absolute;top:36px;left:50%;transform:translateX(-50%);width:88%;height:55%;background:#0c0c10;border-radius:14px;padding:14px;display:grid;grid-template-rows:repeat(5,1fr);gap:6px;box-shadow:inset 0 2px 4px rgba(0,0,0,0.7)}
+.keyboard-row{display:grid;grid-template-columns:repeat(14,1fr);gap:6px;height:100%}
+.key{background:linear-gradient(180deg,#1a1a20,#0f0f12);border-radius:6px;box-shadow:inset 0 1px 0 rgba(255,255,255,0.06),0 2px 2px rgba(0,0,0,0.5)}
+.key.wide{grid-column:span 2}
+.key.wider{grid-column:span 3}
+.key.space{grid-column:span 6}
+
+/* TRACKPAD */
+.trackpad{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);width:42%;height:26%;background:linear-gradient(180deg,#1f1f23,#15151a);border-radius:18px;box-shadow:inset 0 4px 8px rgba(0,0,0,0.6),0 2px 0 rgba(255,255,255,0.05)}
+
+/* LID — cerrada (rotateX 92 = plegada encima del base) */
+.lid{position:absolute;left:0;bottom:100%;width:1400px;height:920px;border-radius:36px 36px 8px 8px;background:linear-gradient(160deg,#1c1c22 0%,#252529 50%,#16161a 100%);transform-origin:bottom center;transform:rotateX(92deg);box-shadow:inset 0 2px 0 rgba(255,255,255,0.08),inset 0 -2px 0 rgba(0,0,0,0.4),0 -6px 30px rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center}
+
+/* Reflejo top sobre lid */
+.lid::before{content:'';position:absolute;top:0;left:0;right:0;height:50%;background:linear-gradient(to bottom,rgba(255,255,255,0.06),transparent);border-radius:36px 36px 0 0;pointer-events:none}
+/* Subtle gradient color overlay */
+.lid::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(108,92,231,0.05),transparent 40%,transparent 60%,rgba(0,206,201,0.05));border-radius:inherit;pointer-events:none}
+
+/* LOGO en la tapa */
+.lid-logo{width:280px;height:280px;border-radius:64px;background:linear-gradient(135deg,#6C5CE7 0%,#8A7BFF 50%,#00CEC9 100%);display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Syne',sans-serif;font-weight:800;font-size:130px;letter-spacing:-0.05em;box-shadow:0 0 100px rgba(108,92,231,0.6),0 0 200px rgba(0,206,201,0.4),inset 0 4px 0 rgba(255,255,255,0.18),inset 0 -4px 0 rgba(0,0,0,0.2);position:relative;z-index:2}
+
+/* SHADOW bajo la laptop (proyectada al suelo) */
+.shadow-floor{position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(-100px) rotateX(90deg);width:1300px;height:200px;background:radial-gradient(ellipse,rgba(0,0,0,0.85) 0%,transparent 65%);filter:blur(40px);opacity:0.7}
+
+/* GLOW FLOOR (reflejo cyan/violeta del logo en el suelo) */
+.glow-floor{position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(-50px) rotateX(90deg);width:1100px;height:300px;background:radial-gradient(ellipse,rgba(108,92,231,0.35),rgba(0,206,201,0.15) 30%,transparent 65%);filter:blur(60px);opacity:0.75;mix-blend-mode:screen}
+</style>
+</head>
+<body>
+
+<div class="ambient">
+  <div class="grid-bg"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <div class="particles" id="particles"></div>
+</div>
+
+<div class="scene">
+  <div class="macbook">
+    <div class="lid">
+      <div class="lid-logo">P</div>
+    </div>
+    <div class="base">
+      <div class="keyboard">
+        <div class="keyboard-row"><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div></div>
+        <div class="keyboard-row"><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div></div>
+        <div class="keyboard-row"><div class="key wide"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key wide"></div></div>
+        <div class="keyboard-row"><div class="key wider"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key wider"></div></div>
+        <div class="keyboard-row"><div class="key"></div><div class="key"></div><div class="key"></div><div class="key space"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div></div>
+      </div>
+      <div class="trackpad"></div>
+    </div>
+    <div class="glow-floor"></div>
+    <div class="shadow-floor"></div>
+  </div>
+</div>
+
+<script>
+const pf = document.getElementById('particles');
+for (let i = 0; i < 80; i++) {
+  const p = document.createElement('div');
+  p.className = 'particle';
+  p.style.left = Math.random() * 100 + '%';
+  p.style.top = Math.random() * 100 + '%';
+  if (Math.random() > 0.5) p.style.background = '#5CE5E0';
+  p.style.opacity = (Math.random() * 0.5 + 0.2).toString();
+  const s = Math.random() * 3 + 1;
+  p.style.width = s + 'px';
+  p.style.height = s + 'px';
+  pf.appendChild(p);
+}
+</script>
+</body>
+</html>
