@@ -463,6 +463,157 @@ footer{transform-origin:center center;will-change:transform,opacity;backface-vis
 .port-tag{padding:4px 10px;border-radius:99px;background:rgba(255,255,255,0.04);border:1px solid var(--border);font-family:var(--mono);font-size:10px;color:var(--text-3);letter-spacing:.1em;text-transform:uppercase}
 
 /* ==================== PROCESO ==================== */
+/* ==================== ABOUT / QUIENES SOMOS ==================== */
+.about{padding:140px 0;position:relative}
+.about .section-head{margin-bottom:60px}
+.about-demos{display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+@media(max-width:900px){.about-demos{grid-template-columns:1fr;gap:18px}}
+
+.about-demo{
+  background:linear-gradient(180deg,rgba(15,15,22,0.6),rgba(10,10,16,0.4));
+  border:1px solid var(--border);
+  border-radius:24px;
+  padding:32px 28px;
+  transition:border-color .5s var(--ease);
+}
+.about-demo:hover{border-color:var(--border-hi)}
+.about-demo-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:24px}
+.about-demo-icon{
+  width:46px;height:46px;border-radius:12px;flex-shrink:0;
+  background:linear-gradient(135deg,rgba(108,92,231,0.25),rgba(0,206,201,0.1));
+  border:1px solid rgba(108,92,231,0.3);
+  display:flex;align-items:center;justify-content:center;font-size:22px;
+}
+.about-demo-head h3{font-family:var(--display);font-weight:700;font-size:20px;margin-bottom:4px;letter-spacing:-.01em}
+.about-demo-head p{font-size:13.5px;color:var(--text-2);line-height:1.55}
+
+/* Chat IA demo */
+.chat-demo{display:flex;flex-direction:column;gap:14px}
+.chat-messages{
+  background:rgba(0,0,0,0.3);border:1px solid var(--border);
+  border-radius:14px;padding:16px;
+  min-height:200px;max-height:280px;overflow-y:auto;
+  display:flex;flex-direction:column;gap:10px;
+}
+.chat-msg{display:flex;gap:8px;align-items:flex-end;animation:chatPop .35s var(--ease)}
+.chat-msg.user{justify-content:flex-end}
+@keyframes chatPop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.chat-avatar{
+  width:26px;height:26px;border-radius:50%;flex-shrink:0;
+  background:var(--grad);
+  font-family:var(--display);font-weight:700;font-size:12px;color:#fff;
+  display:flex;align-items:center;justify-content:center;
+}
+.chat-bubble{
+  background:rgba(108,92,231,0.15);
+  border:1px solid rgba(108,92,231,0.25);
+  padding:10px 14px;border-radius:14px;
+  font-size:13.5px;line-height:1.5;max-width:85%;
+}
+.chat-msg.user .chat-bubble{
+  background:rgba(0,206,201,0.15);
+  border-color:rgba(0,206,201,0.3);
+}
+.chat-typing .chat-bubble{display:flex;gap:4px;padding:14px 16px;align-items:center}
+.chat-typing .chat-bubble span{
+  width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.5);
+  animation:typingDot 1.2s ease-in-out infinite;
+}
+.chat-typing .chat-bubble span:nth-child(2){animation-delay:.15s}
+.chat-typing .chat-bubble span:nth-child(3){animation-delay:.3s}
+@keyframes typingDot{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-4px)}}
+.chat-suggestions{display:flex;flex-wrap:wrap;gap:8px}
+.chat-chip{
+  font-family:var(--mono);font-size:11px;
+  padding:7px 14px;border-radius:99px;
+  background:rgba(108,92,231,0.08);
+  border:1px solid rgba(108,92,231,0.2);
+  color:var(--text);cursor:pointer;
+  transition:all .3s var(--ease);
+}
+.chat-chip:hover:not(:disabled){border-color:var(--accent);background:rgba(108,92,231,0.18);transform:translateY(-1px)}
+.chat-chip:disabled{opacity:.35;cursor:not-allowed}
+
+/* Style customizer demo */
+.style-demo{display:flex;flex-direction:column;gap:18px}
+.style-preview{
+  background:rgba(0,0,0,0.3);border:1px solid var(--border);
+  border-radius:14px;padding:24px;
+  display:flex;align-items:center;justify-content:center;min-height:200px;
+}
+.sp-card{
+  --c:linear-gradient(135deg,#6C5CE7,#00CEC9);
+  --r:16px;
+  background:rgba(20,20,28,0.6);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:var(--r);
+  padding:14px;width:100%;max-width:280px;
+  display:flex;flex-direction:column;gap:12px;
+  transition:border-radius .5s var(--ease),box-shadow .5s var(--ease);
+  box-shadow:0 8px 30px rgba(0,0,0,0.3);
+}
+.sp-thumb{
+  height:80px;border-radius:calc(var(--r) - 6px);
+  background:var(--c);
+  position:relative;overflow:hidden;
+  transition:border-radius .5s var(--ease),background .5s var(--ease);
+}
+.sp-card.motion-on .sp-thumb::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,0.3) 50%,transparent 70%);
+  animation:spShimmer 2.5s ease-in-out infinite;
+}
+@keyframes spShimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+.sp-content{display:flex;flex-direction:column;gap:2px}
+.sp-title{font-family:var(--display);font-weight:700;font-size:16px}
+.sp-sub{font-size:12px;color:var(--text-3)}
+.sp-btn{
+  align-self:flex-start;
+  font-size:12px;font-weight:600;
+  padding:8px 16px;border-radius:calc(var(--r) - 4px);
+  background:var(--c);color:#fff;border:none;cursor:pointer;
+  transition:transform .35s var(--ease),filter .35s var(--ease),border-radius .5s var(--ease),background .5s var(--ease);
+}
+.sp-btn:hover{transform:translateY(-2px);filter:brightness(1.1)}
+.style-controls{display:flex;flex-direction:column;gap:14px}
+.style-row{display:flex;align-items:center;gap:14px}
+.style-label{
+  font-family:var(--mono);font-size:10px;
+  color:var(--text-3);letter-spacing:.18em;text-transform:uppercase;
+  min-width:80px;
+}
+.style-swatches,.style-pills{display:flex;gap:8px;flex-wrap:wrap}
+.swatch{
+  width:30px;height:30px;border-radius:50%;
+  border:2px solid transparent;cursor:pointer;
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease);
+}
+.swatch:hover{transform:scale(1.1)}
+.swatch.active{border-color:#fff;box-shadow:0 0 0 2px var(--accent)}
+.pill{
+  font-family:var(--mono);font-size:11px;
+  padding:6px 12px;border-radius:99px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid var(--border);color:var(--text-2);cursor:pointer;
+  transition:all .3s var(--ease);
+}
+.pill:hover{border-color:var(--border-hi);color:var(--text)}
+.pill.active{
+  background:rgba(108,92,231,0.2);
+  border-color:rgba(108,92,231,0.5);
+  color:#fff;
+}
+@media(max-width:600px){
+  .about{padding:90px 0}
+  .about-demo{padding:24px 20px;border-radius:20px}
+  .about-demo-head h3{font-size:18px}
+  .about-demo-head p{font-size:13px}
+  .chat-messages{min-height:160px;max-height:240px;padding:14px}
+  .chat-bubble{font-size:13px}
+  .style-preview{padding:18px;min-height:auto}
+  .style-row{flex-direction:column;align-items:flex-start;gap:8px}
+}
+
 .process{padding:160px 0;position:relative}
 .process-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;margin-top:60px}
 @media(max-width:900px){.process-grid{grid-template-columns:1fr;gap:0}}
@@ -895,6 +1046,7 @@ html, body {
       <img class="brand-text" src="wordmark.webp" alt="Profit Code">
     </a>
     <div class="nav-links">
+      <a href="#quienes-somos" class="nav-link">Estudio</a>
       <a href="#servicios" class="nav-link">Servicios</a>
       <a href="#proceso" class="nav-link">Proceso</a>
       <a href="#contacto" class="nav-link">Contacto</a>
@@ -912,6 +1064,7 @@ html, body {
 <!-- MOBILE DRAWER -->
 <div class="mobile-overlay" id="mobileOverlay"></div>
 <aside class="mobile-drawer" id="mobileDrawer">
+  <a href="#quienes-somos">Estudio</a>
   <a href="#servicios">Servicios</a>
   <a href="#proceso">Proceso</a>
   <a href="#contacto">Contacto</a>
@@ -986,12 +1139,100 @@ html, body {
   </div>
 </section>
 
+<!-- ============ QUIENES SOMOS ============ -->
+<section class="about" id="quienes-somos">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="sec-meta">
+        <span class="sec-num">01</span>
+        <span class="sec-bar"></span>
+        <span class="sec-label">Quiénes somos</span>
+      </div>
+      <h2 class="h2">Un estudio chico<br>con <span class="grad">foco grande</span></h2>
+      <p class="lead" style="margin:16px auto 0">Diseñamos y construimos webs y asistentes IA con obsesión por el detalle. Acá abajo podés probar dos cosas que hacemos — interactuá con ellas y vas a entender mejor de qué somos capaces.</p>
+    </div>
+
+    <div class="about-demos reveal-stagger">
+      <article class="about-demo">
+        <div class="about-demo-head">
+          <div class="about-demo-icon">💬</div>
+          <div>
+            <h3>Asistente con IA</h3>
+            <p>Probá un chat impulsado por inteligencia artificial — uno así puede atender a tus clientes 24/7 en la web o por WhatsApp.</p>
+          </div>
+        </div>
+        <div class="chat-demo">
+          <div class="chat-messages" id="chatMessages">
+            <div class="chat-msg bot">
+              <span class="chat-avatar">P</span>
+              <div class="chat-bubble">¡Hola! Soy el asistente de Profit Code. Tocá una pregunta para probarme. 👇</div>
+            </div>
+          </div>
+          <div class="chat-suggestions" id="chatSuggestions">
+            <button class="chat-chip" data-q="precios">¿Cuánto cuesta una web?</button>
+            <button class="chat-chip" data-q="tiempo">¿En cuánto tiempo entregan?</button>
+            <button class="chat-chip" data-q="que">¿Qué pueden hacer?</button>
+            <button class="chat-chip" data-q="ia">¿Cómo funciona el IA?</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="about-demo">
+        <div class="about-demo-head">
+          <div class="about-demo-icon">🎨</div>
+          <div>
+            <h3>Diseño a tu medida</h3>
+            <p>Tocá los controles y mirá cómo cambia la card en tiempo real. Así adaptamos cada detalle a tu marca.</p>
+          </div>
+        </div>
+        <div class="style-demo">
+          <div class="style-preview">
+            <div class="sp-card motion-on">
+              <div class="sp-thumb"></div>
+              <div class="sp-content">
+                <div class="sp-title">Tu marca acá</div>
+                <div class="sp-sub">Hecho a tu medida</div>
+              </div>
+              <button class="sp-btn">Ver más →</button>
+            </div>
+          </div>
+          <div class="style-controls">
+            <div class="style-row">
+              <span class="style-label">Color</span>
+              <div class="style-swatches">
+                <button class="swatch" data-color="violeta" style="background:linear-gradient(135deg,#6C5CE7,#00CEC9)" aria-label="Violeta cian"></button>
+                <button class="swatch" data-color="naranja" style="background:linear-gradient(135deg,#F97316,#EAB308)" aria-label="Naranja"></button>
+                <button class="swatch" data-color="rosa" style="background:linear-gradient(135deg,#EC4899,#8B5CF6)" aria-label="Rosa violeta"></button>
+                <button class="swatch" data-color="verde" style="background:linear-gradient(135deg,#10B981,#06B6D4)" aria-label="Verde cian"></button>
+              </div>
+            </div>
+            <div class="style-row">
+              <span class="style-label">Bordes</span>
+              <div class="style-pills">
+                <button class="pill active" data-radius="rounded">Suaves</button>
+                <button class="pill" data-radius="sharp">Rectos</button>
+              </div>
+            </div>
+            <div class="style-row">
+              <span class="style-label">Movimiento</span>
+              <div class="style-pills">
+                <button class="pill active" data-motion="on">Activo</button>
+                <button class="pill" data-motion="off">Quieto</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
 <!-- ============ SERVICIOS ============ -->
 <section class="services" id="servicios">
   <div class="container">
     <div class="section-head reveal">
       <div class="sec-meta">
-        <span class="sec-num">01</span>
+        <span class="sec-num">02</span>
         <span class="sec-bar"></span>
         <span class="sec-label">Lo que hacemos</span>
       </div>
@@ -1047,7 +1288,7 @@ html, body {
   <div class="container">
     <div class="section-head reveal">
       <div class="sec-meta">
-        <span class="sec-num">02</span>
+        <span class="sec-num">03</span>
         <span class="sec-bar"></span>
         <span class="sec-label">Cómo trabajamos</span>
       </div>
@@ -1096,7 +1337,7 @@ html, body {
   <div class="container">
     <div class="section-head reveal">
       <div class="sec-meta">
-        <span class="sec-num">03</span>
+        <span class="sec-num">04</span>
         <span class="sec-bar"></span>
         <span class="sec-label">Tecnología</span>
       </div>
@@ -1149,7 +1390,7 @@ html, body {
   <div class="cta-overlay"></div>
   <div class="cta-content">
     <div class="sec-meta">
-      <span class="sec-num">04</span>
+      <span class="sec-num">05</span>
       <span class="sec-bar"></span>
       <span class="sec-label">Próximo paso</span>
     </div>
@@ -1173,7 +1414,7 @@ html, body {
   <div class="container contact-grid">
     <div class="contact-info reveal">
       <div class="sec-meta">
-        <span class="sec-num">05</span>
+        <span class="sec-num">06</span>
         <span class="sec-bar"></span>
         <span class="sec-label">Hablemos</span>
       </div>
@@ -1228,6 +1469,7 @@ html, body {
         </div>
         <div class="footer-col">
           <h5>Estudio</h5>
+          <a href="#quienes-somos">Quiénes somos</a>
           <a href="#servicios">Servicios</a>
           <a href="#proceso">Proceso</a>
           <a href="#contacto">Contacto</a>
@@ -1429,6 +1671,7 @@ const palette = document.getElementById('palette');
 const paletteInput = document.getElementById('paletteInput');
 const paletteList = document.getElementById('paletteList');
 const items = [
+  { title: 'Estudio', sub: 'Quiénes somos · demos', href: '#quienes-somos', meta: 'Sec' },
   { title: 'Servicios', sub: 'Lo que hacemos', href: '#servicios', meta: 'Sec' },
   { title: 'Proceso', sub: 'Cómo trabajamos', href: '#proceso', meta: 'Sec' },
   { title: 'Contacto', sub: 'Empezar proyecto', href: '#contacto', meta: 'Sec' },
@@ -1533,6 +1776,88 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     t.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 });
+
+/* ===== ABOUT — Mini chat IA ===== */
+(() => {
+  const messages = document.getElementById('chatMessages');
+  const suggestions = document.getElementById('chatSuggestions');
+  if (!messages || !suggestions) return;
+
+  const responses = {
+    precios: 'Una web arranca en USD 1,5k, una web con asistente IA desde 4,5k y una plataforma a medida en 9k. Te paso una propuesta concreta cuando me contás un poco más sobre tu proyecto. 💬',
+    tiempo:  'Una landing en 2 semanas. Una web con IA en 4-6 semanas. Una plataforma completa en 8-12 semanas. Sin vueltas. ⏱️',
+    que:     'Webs con animaciones cinematográficas, asistentes con IA que atienden por vos, paneles internos y sistemas a medida. Lo que tu marca necesite. 🚀',
+    ia:      'Conectamos un cerebro de IA a WhatsApp, web o Instagram. Atiende, responde, califica clientes y vende 24/7 — recordando a cada persona y aprendiendo de cada conversación. 🤖',
+  };
+
+  const addMsg = (text, who) => {
+    const div = document.createElement('div');
+    div.className = `chat-msg ${who}`;
+    div.innerHTML = who === 'bot'
+      ? `<span class="chat-avatar">P</span><div class="chat-bubble">${text}</div>`
+      : `<div class="chat-bubble">${text}</div>`;
+    messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
+    return div;
+  };
+  const addTyping = () => {
+    const div = document.createElement('div');
+    div.className = 'chat-msg bot chat-typing';
+    div.innerHTML = `<span class="chat-avatar">P</span><div class="chat-bubble"><span></span><span></span><span></span></div>`;
+    messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
+    return div;
+  };
+
+  suggestions.querySelectorAll('.chat-chip').forEach(chip => {
+    chip.addEventListener('click', async () => {
+      const key = chip.dataset.q;
+      const question = chip.textContent;
+      chip.disabled = true;
+      addMsg(question, 'user');
+      const typing = addTyping();
+      await new Promise(r => setTimeout(r, 900 + Math.random() * 600));
+      typing.remove();
+      addMsg(responses[key] || '...', 'bot');
+    });
+  });
+})();
+
+/* ===== ABOUT — Style customizer ===== */
+(() => {
+  const card = document.querySelector('.sp-card');
+  if (!card) return;
+  const colors = {
+    violeta: 'linear-gradient(135deg,#6C5CE7,#00CEC9)',
+    naranja: 'linear-gradient(135deg,#F97316,#EAB308)',
+    rosa:    'linear-gradient(135deg,#EC4899,#8B5CF6)',
+    verde:   'linear-gradient(135deg,#10B981,#06B6D4)',
+  };
+  const radii = { rounded: '16px', sharp: '4px' };
+
+  document.querySelectorAll('.swatch').forEach((s, i) => {
+    if (i === 0) s.classList.add('active');
+    s.addEventListener('click', () => {
+      document.querySelectorAll('.swatch').forEach(x => x.classList.remove('active'));
+      s.classList.add('active');
+      card.style.setProperty('--c', colors[s.dataset.color]);
+    });
+  });
+  document.querySelectorAll('.pill[data-radius]').forEach(p => {
+    p.addEventListener('click', () => {
+      document.querySelectorAll('.pill[data-radius]').forEach(x => x.classList.remove('active'));
+      p.classList.add('active');
+      card.style.setProperty('--r', radii[p.dataset.radius]);
+    });
+  });
+  document.querySelectorAll('.pill[data-motion]').forEach(p => {
+    p.addEventListener('click', () => {
+      document.querySelectorAll('.pill[data-motion]').forEach(x => x.classList.remove('active'));
+      p.classList.add('active');
+      card.classList.toggle('motion-on', p.dataset.motion === 'on');
+    });
+  });
+})();
 
 /* ===== SCROLL ROLL — efecto "rollo girando" ===== */
 (() => {
