@@ -700,6 +700,167 @@ footer{padding:60px 0 30px;border-top:1px solid var(--border);margin-top:80px;po
   .sec-meta .sec-num{font-size:30px}
   .sec-meta{gap:12px}
 }
+
+/* ============================================
+   FIX MOBILE — Profit Code Landing
+   Aplica solo en pantallas <= 600px
+   ============================================ */
+
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+/* === HERO === */
+@media (max-width: 600px) {
+  .hero { padding: 100px 0 70px !important; }
+  .hero-content {
+    padding: 0 18px !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
+  }
+  .hero h1 {
+    font-size: clamp(32px, 8.6vw, 44px) !important;
+    line-height: 1.05 !important;
+    letter-spacing: -0.02em !important;
+    margin-bottom: 22px !important;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    hyphens: auto;
+  }
+  .hero h1 .row,
+  .hero h1 .word {
+    max-width: 100%;
+    white-space: normal;
+    display: inline;
+  }
+  .hero p.lead,
+  .hero .lead {
+    font-size: 15px !important;
+    line-height: 1.5 !important;
+    padding: 0 6px;
+    margin-bottom: 28px !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .hero h1 { font-size: 28px !important; }
+  .hero p.lead, .hero .lead { font-size: 14px !important; }
+}
+
+/* === MANIFESTO === */
+@media (max-width: 600px) {
+  .manifesto-text,
+  h2.manifesto-text {
+    font-size: clamp(22px, 6.5vw, 30px) !important;
+    line-height: 1.15 !important;
+    letter-spacing: -0.01em !important;
+    padding: 0 12px;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
+}
+
+/* === H2 GENÉRICO === */
+@media (max-width: 600px) {
+  .h2,
+  h2.h2,
+  .section-head h2,
+  .cta-content h2,
+  .contact-info .h2 {
+    font-size: clamp(28px, 7.5vw, 38px) !important;
+    line-height: 1.08 !important;
+    letter-spacing: -0.02em !important;
+    padding: 0 8px;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
+}
+
+/* === SERVICE CARDS === */
+@media (max-width: 600px) {
+  .service-card {
+    padding: 26px 20px !important;
+    margin: 0 4px;
+  }
+  .service-card h3 {
+    font-size: 18px !important;
+    padding-right: 40px;
+  }
+  .service-card p { font-size: 13.5px !important; }
+  .service-feats li {
+    font-size: 11px !important;
+    line-height: 1.5 !important;
+    word-break: break-word;
+  }
+}
+
+/* === PROCESO === */
+@media (max-width: 600px) {
+  .process-step { padding: 20px 4px !important; }
+  .process-step h3 { font-size: 18px !important; }
+  .process-step p { font-size: 14px !important; }
+}
+
+/* === STATS === */
+@media (max-width: 600px) {
+  .stats-grid { gap: 24px !important; }
+  .stat .num { font-size: clamp(40px, 12vw, 60px) !important; }
+  .stat .label { font-size: 10.5px !important; letter-spacing: 0.12em; }
+}
+
+/* === CTA FINAL === */
+@media (max-width: 600px) {
+  .cta-content h2 {
+    font-size: clamp(28px, 7.8vw, 38px) !important;
+    line-height: 1.08 !important;
+    padding: 0 10px;
+  }
+  .cta-content p { font-size: 14.5px !important; padding: 0 8px; }
+}
+
+/* === CONTACTO === */
+@media (max-width: 600px) {
+  .contact-form { padding: 26px 18px !important; }
+  .channel { padding: 14px !important; }
+  .channel .info .val {
+    font-size: 13px !important;
+    word-break: break-all;
+  }
+}
+
+/* === FOOTER === */
+@media (max-width: 600px) {
+  .footer .container { padding: 0 16px; }
+}
+
+/* === NAV / BRAND === */
+@media (max-width: 600px) {
+  .brand-text, img.brand-text { height: 22px !important; }
+  .brand-mark { width: 38px !important; height: 38px !important; }
+}
+
+/* === ORBES decorativos === */
+.orb, .orb.o1, .orb.o2, .orb.o3 { pointer-events: none; }
+@media (max-width: 600px) {
+  .orb { transform: scale(0.7); }
+}
+
+/* === PATCH CORRECTIVO — selectores reales del DOM === */
+@media (max-width: 600px) {
+  /* Proceso usa <h4> en este DOM, no <h3> */
+  .process-step h4 { font-size: 18px !important; }
+
+  /* Stats usan .stat-item .stat-num / .stat-label en este DOM */
+  .stat-item .stat-num { font-size: clamp(40px, 12vw, 60px) !important; }
+  .stat-item .stat-label { font-size: 10.5px !important; letter-spacing: 0.12em !important; }
+
+  /* El <footer> de este DOM no tiene clase .footer; el wrapper interno es .footer-inner */
+  footer .container { padding: 0 16px !important; }
+  .footer-inner { padding: 0 4px; }
+}
+
+/* === FIN FIX MOBILE === */
 </style>
 </head>
 
@@ -846,7 +1007,7 @@ footer{padding:60px 0 30px;border-top:1px solid var(--border);margin-top:80px;po
         <p>Sitios, landings y tiendas online con animaciones que enamoran y optimizadas para que Google las encuentre.</p>
         <ul class="service-feats">
           <li>Tecnología moderna y rápida</li>
-          <li>Se ve perfecto en celular, tablet y compu</li>
+          <li>Se ve perfecto en celular, tablet y computadora</li>
           <li>Carga al instante, sin esperas</li>
           <li>Hosting y dominio ya listos</li>
         </ul>
